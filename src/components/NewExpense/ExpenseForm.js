@@ -24,7 +24,7 @@ function ExpenseForm(props) {
 
     const expenseData = {
       title: title,
-      amount: parseFloat(amount),
+      amount: +amount,
       date: new Date(date),
     };
 
@@ -64,9 +64,10 @@ function ExpenseForm(props) {
             onChange={dateChangeHandler}
           ></input>
         </div>
-        <div>
-          <button type="submit">Add Expense</button>
-        </div>
+      </div>
+      <div className="new-expense__actions">
+        <button onClick={props.onCancel}>Cancel</button>
+        <button type="submit">Add Expense</button>
       </div>
     </form>
   );
