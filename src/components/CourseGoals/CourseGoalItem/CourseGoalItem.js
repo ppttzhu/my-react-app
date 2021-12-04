@@ -1,8 +1,7 @@
-import React from 'react';
+import React from "react";
+import styles from "./CourseGoalItem.module.css";
 
-import './CourseGoalItem.css';
-
-const CourseGoalItem = props => {
+const CourseGoalItem = (props) => {
   // const [deleteText, setDeleteText] = useState('');
 
   const deleteHandler = () => {
@@ -11,7 +10,7 @@ const CourseGoalItem = props => {
   };
 
   return (
-    <li className="goal-item" onClick={deleteHandler}>
+    <li className={styles["goal-item"]} onClick={deleteHandler}>
       {props.children}
     </li>
   );
