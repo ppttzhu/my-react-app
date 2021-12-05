@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import Button from "../UI/Button";
 import Card from "../UI/Card";
@@ -6,12 +6,14 @@ import ErrorModal from "../UI/ErrorModal";
 import styles from "./AddUser.module.css";
 
 function AddUser(props) {
-  const [enteredUserName, setEnteredUserName] = useState("");
-  const [enteredUserAge, setEnteredUserAge] = useState("");
   const [error, setError] = useState(null);
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
 
   function addUserHandler(event) {
     event.preventDefault(false);
+    const enteredUserName = nameInputRef.current.name;
+    const enteredUserAge = ageInputRef.current.name;
     if (
       enteredUserName.trim().length === 0 ||
       enteredUserAge.trim().length === 0
@@ -30,8 +32,8 @@ function AddUser(props) {
       return;
     }
 
-    setEnteredUserName("");
-    setEnteredUserAge("");
+    nameInputRef.current.name = "";
+    ageInputRef.current.name = "";
     props.onAddUser(enteredUserName, enteredUserAge);
   }
 
@@ -39,16 +41,8 @@ function AddUser(props) {
     setError(null);
   }
 
-  function userNameChangedHanlder(event) {
-    setEnteredUserName(event.target.value);
-  }
-
-  function userAgeChangedHanlder(event) {
-    setEnteredUserAge(event.target.value);
-  }
-
   return (
-    <div>
+    <>
       {error && (
         <ErrorModal
           title={error.title}
@@ -59,23 +53,13 @@ function AddUser(props) {
       <Card className={styles.input}>
         <form onSubmit={addUserHandler}>
           <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            value={enteredUserName}
-            onChange={userNameChangedHanlder}
-          />
+          <input type="text" id="username" ref={nameInputRef} />
           <label htmlFor="age">Age (Years)</label>
-          <input
-            type="number"
-            id="age"
-            value={enteredUserAge}
-            onChange={userAgeChangedHanlder}
-          />
+          <input type="number" id="age" ref={ageInputRef} />
           <Button type="submit">Submit</Button>
         </form>
       </Card>
-    </div>
+    </>
   );
 }
 
